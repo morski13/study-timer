@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Plan učenja</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderni Timer</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Plan učenja i pauza</h1>
-  <div id="timer-display">00:00</div>
-  <button id="start-btn">Pokreni</button>
-  <button id="pause-btn">Pauza</button>
-  <button id="reset-btn">Reset</button>
-  <div id="status">Spreman za početak</div>
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>⏰ TIMER</h1>
+        
+        <div class="time-input">
+            <div>
+                <input type="number" id="hours" placeholder="00" min="0" max="23">
+                <label>sati</label>
+            </div>
+            <div>
+                <input type="number" id="minutes" placeholder="00" min="0" max="59">
+                <label>minuti</label>
+            </div>
+            <div>
+                <input type="number" id="seconds" placeholder="00" min="0" max="59">
+                <label>sekunde</label>
+            </div>
+        </div>
+        
+        <div id="timer-display">00:00:00</div>
+        
+        <div class="controls">
+            <button id="start" class="start-btn">▶ Start</button>
+            <button id="pause" class="stop-btn">⏸ Pauza</button>
+            <button id="reset" class="reset-btn">🔄 Reset</button>
+        </div>
+        
+        <div id="status">Postavite vreme i pritisnite Start</div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
