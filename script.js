@@ -1,62 +1,92 @@
-let timer;
-let timeLeft = 45 * 60; // 45 minuta u sekundama
+let timer = null;
+let totalSeconds = 0;
 let isRunning = false;
-let isBreak = false;
 
+const hoursInput = document.getElementById('hours');
+const minutesInput = document.getElementById('minutes');
+const secondsInput = document.getElementById('seconds');
 const timerDisplay = document.getElementById('timer-display');
-const statusDisplay = document.getElementById('status');
-const startBtn = document.getElementById('start-btn');
-const pauseBtn = document.getElementById('pause-btn');
-const resetBtn = document.getElementById('reset-btn');
+const startBtn = document.getElementById('start');
+const pauseBtn = document.getElementById('pause');
+const resetBtn = document.getElementById('reset');
+const status = document.getElementById('status');
 
 function updateDisplay() {
-  let minutes = Math.floor(timeLeft / 60);
-  let seconds = timeLeft % 60;
-  timerDisplay.textContent =
-    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    timerDisplay.textContent = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-function startTimer() {
-  if (!isRunning) {
-    isRunning = true;
-    timer = setInterval(() => {
-      timeLeft--;
-      updateDisplay();
-      if (timeLeft <= 0) {
+function setTimer() {
+    const hours = parseInt(hoursInput.value) || 0;
+    const minutes = parseInt(minutesInput.value) || 0;
+    const seconds = parseInt(secondsInput.value) || 0;
+    
+    totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    updateDisplay();
+}
+
+startBtn.addEventListener('click', function() {
+    if (!isRunning) {
+        setTimer();
+        if (totalSeconds > 0) {
+            isRunning = true;
+            timerDisplay.classList.add('pulse');
+            status.textContent = 'Timer je pokrenut...';
+            
+            timer = setInterval(function() {
+                totalSeconds--;
+                updateDisplay();
+                
+                if (totalSeconds <= 0) {
+                    clearInterval(timer);
+                    isRunning = false;
+                    timerDisplay.classList.remove('pulse');
+                    status.textContent = '⏰ Vreme je isteklo!';
+                    
+                    // Notification sound effect
+                    if ('Notification' in window) {
+                        new Notification('Timer završen!', {
+                            body: 'Vreme je isteklo!',
+                            icon: '⏰'
+                        });
+                    }
+                }
+            }, 1000);
+        } else {
+            status.textContent = 'Molimo unesite vreme!';
+        }
+    }
+});
+
+pauseBtn.addEventListener('click', function() {
+    if (isRunning) {
         clearInterval(timer);
         isRunning = false;
-        if (!isBreak) {
-          statusDisplay.textContent = "Vreme je za PAUZU!";
-          timeLeft = 10 * 60; // 10 minuta pauze
-          isBreak = true;
-        } else {
-          statusDisplay.textContent = "Nazad na UČENJE!";
-          timeLeft = 45 * 60;
-          isBreak = false;
-        }
-        startTimer();
-      }
-    }, 1000);
-  }
+        timerDisplay.classList.remove('pulse');
+        status.textContent = 'Timer je pauziran';
+    }
+});
+
+resetBtn.addEventListener('click', function() {
+    clearInterval(timer);
+    isRunning = false;
+    totalSeconds = 0;
+    timerDisplay.classList.remove('pulse');
+    updateDisplay();
+    hoursInput.value = '';
+    minutesInput.value = '';
+    secondsInput.value = '';
+    status.textContent = 'Postavite vreme i pritisnite Start';
+});
+
+// Request notification permission
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
 }
 
-function pauseTimer() {
-  clearInterval(timer);
-  isRunning = false;
-}
-
-function resetTimer() {
-  clearInterval(timer);
-  isRunning = false;
-  timeLeft = 45 * 60;
-  isBreak = false;
-  statusDisplay.textContent = "Spreman za početak";
-  updateDisplay();
-}
-
-startBtn.addEventListener('click', startTimer);
-pauseBtn.addEventListener('click', pauseTimer);
-resetBtn.addEventListener('click', resetTimer);
-
+// Initialize display
 updateDisplay();
-
