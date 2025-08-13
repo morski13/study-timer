@@ -287,6 +287,42 @@
         let totalSeconds = 0;
         let isRunning = false;
 
+        // Kreiranje audio konteksta za zvukove
+        function playBeep(frequency, duration, type = 'sine') {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch(e) {
+                console.log('Audio nije dostupan');
+            }
+        }
+
+        function playStartSound() {
+            // Prijatan start zvuk - uzlazni ton
+            playBeep(400, 0.2);
+            setTimeout(() => playBeep(600, 0.2), 100);
+        }
+
+        function playEndSound() {
+            // Završni zvuk - nekoliko tonova
+            playBeep(800, 0.3);
+            setTimeout(() => playBeep(600, 0.3), 200);
+            setTimeout(() => playBeep(800, 0.5), 400);
+        }
+
         function updateDisplay() {
             const hours = Math.floor(totalSeconds / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -329,6 +365,9 @@
                     document.getElementById('timer-display').classList.add('pulse');
                     document.getElementById('status').textContent = 'Timer je pokrenut...';
                     
+                    // Pusti start zvuk
+                    playStartSound();
+                    
                     timer = setInterval(function() {
                         totalSeconds--;
                         updateDisplay();
@@ -338,6 +377,9 @@
                             isRunning = false;
                             document.getElementById('timer-display').classList.remove('pulse');
                             document.getElementById('status').textContent = '⏰ Vreme je isteklo!';
+                            
+                            // Pusti završni zvuk
+                            playEndSound();
                             
                             // Pokušaj notifikaciju
                             try {
