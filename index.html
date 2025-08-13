@@ -316,6 +316,25 @@
             setTimeout(() => playBeep(600, 0.2), 100);
         }
 
+        function playCountdownSound(seconds) {
+            if (seconds === 5) {
+                // 5 sekundi - nizak ton
+                playBeep(500, 0.3);
+            } else if (seconds === 4) {
+                // 4 sekunde - srednji ton
+                playBeep(600, 0.3);
+            } else if (seconds === 3) {
+                // 3 sekunde - viši ton
+                playBeep(700, 0.4);
+            } else if (seconds === 2) {
+                // 2 sekunde - još viši ton
+                playBeep(850, 0.4);
+            } else if (seconds === 1) {
+                // 1 sekunda - najviši ton
+                playBeep(1000, 0.5);
+            }
+        }
+
         function playEndSound() {
             // Završni zvuk - nekoliko tonova
             playBeep(800, 0.3);
@@ -371,6 +390,11 @@
                     timer = setInterval(function() {
                         totalSeconds--;
                         updateDisplay();
+                        
+                        // Countdown zvukovi za poslednje sekunde
+                        if (totalSeconds === 5 || totalSeconds === 4 || totalSeconds === 3 || totalSeconds === 2 || totalSeconds === 1) {
+                            playCountdownSound(totalSeconds);
+                        }
                         
                         if (totalSeconds <= 0) {
                             clearInterval(timer);
