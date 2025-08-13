@@ -12,274 +12,258 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #0f0f0f;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            overflow: hidden;
+            color: #e5e5e5;
+            margin: 0;
+            padding: 20px;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 48px 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
             text-align: center;
             max-width: 500px;
-            width: 90%;
-            position: relative;
+            width: 100%;
+            border: 1px solid #2a2a2a;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            font-weight: 500;
+            color: #f5f5f5;
+            letter-spacing: 0.05em;
         }
 
         .presets {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
-            margin: 20px 0;
+            margin: 32px 0;
         }
 
         .preset-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            color: white;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            color: #d4d4d4;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
             font-weight: 400;
-            letter-spacing: 0.5px;
         }
 
         .preset-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .preset-btn:active {
-            transform: translateY(0);
+            background: #3a3a3a;
+            border-color: #4a4a4a;
         }
 
         .time-input {
             display: flex;
-            gap: 10px;
+            gap: 20px;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
 
+        .time-input > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
         .time-input input {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 10px 15px;
-            color: white;
-            font-size: 1.1rem;
-            width: 80px;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            padding: 12px;
+            color: #e5e5e5;
+            font-size: 1rem;
+            width: 60px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            font-weight: 400;
+            transition: border-color 0.2s ease;
         }
 
         .time-input input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: #737373;
         }
 
         .time-input input:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            border-color: #525252;
         }
 
         .time-input label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            font-weight: 300;
+            font-size: 0.7rem;
+            color: #a3a3a3;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         #timer-display {
-            font-size: 5rem;
-            font-weight: 100;
-            margin: 30px 0;
-            letter-spacing: 4px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 2;
-            transition: all 0.3s ease;
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin: 48px 0;
+            letter-spacing: 0.1em;
+            color: #f5f5f5;
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            transition: color 0.3s ease;
         }
 
         #timer-display.pulse {
-            animation: pulse 1s infinite;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+            0%, 100% { 
+                color: #f5f5f5;
+            }
+            50% { 
+                color: #d4d4d4;
+            }
         }
 
         .controls {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
-            margin: 30px 0;
+            margin: 48px 0 32px 0;
         }
 
         button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            color: white;
+            border: 1px solid #3a3a3a;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            font-weight: 500;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        button:hover::before {
-            left: 100%;
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        button:active {
-            transform: translateY(0);
+            transition: all 0.2s ease;
+            font-weight: 400;
+            min-width: 80px;
         }
 
         .start-btn {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            background: #2a2a2a;
+            color: #e5e5e5;
         }
 
         .start-btn:hover {
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+            background: #3a3a3a;
+            border-color: #4a4a4a;
         }
 
         .stop-btn {
-            background: linear-gradient(45deg, #dc3545, #fd7e14);
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+            background: #2a2a2a;
+            color: #e5e5e5;
         }
 
         .stop-btn:hover {
-            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.6);
+            background: #3a3a3a;
+            border-color: #4a4a4a;
         }
 
         .reset-btn {
-            background: linear-gradient(45deg, #6c757d, #adb5bd);
-            color: white;
-            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+            background: #2a2a2a;
+            color: #e5e5e5;
         }
 
         .reset-btn:hover {
-            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.6);
+            background: #3a3a3a;
+            border-color: #4a4a4a;
         }
 
         #status {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 2;
+            margin-top: 32px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #a3a3a3;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 24px;
+                margin: 16px;
+            }
+            
             #timer-display {
-                font-size: 3.5rem;
+                font-size: 2.5rem;
             }
             
             h1 {
-                font-size: 2rem;
-            }
-            
-            .container {
-                padding: 30px 20px;
+                font-size: 1.125rem;
+                margin-bottom: 32px;
             }
             
             button {
-                padding: 12px 20px;
-                font-size: 1rem;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+                min-width: 70px;
             }
             
             .preset-btn {
-                padding: 8px 15px;
-                font-size: 0.8rem;
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            
+            .time-input {
+                gap: 16px;
+            }
+            
+            .time-input input {
+                width: 50px;
+                padding: 10px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>⏰ TIMER</h1>
+        <h1>Productivity Timer</h1>
         
         <div class="presets">
-            <button class="preset-btn" onclick="setPreset(45)">📚 Učenje (45min)</button>
-            <button class="preset-btn" onclick="setPreset(10)">☕ Pauza mala (10min)</button>
-            <button class="preset-btn" onclick="setPreset(15)">🍽️ Pauza velika (15min)</button>
+            <button class="preset-btn" onclick="setPreset(45)">Study Session</button>
+            <button class="preset-btn" onclick="setPreset(10)">Short Break</button>
+            <button class="preset-btn" onclick="setPreset(15)">Long Break</button>
         </div>
         
         <div class="time-input">
             <div>
                 <input type="number" id="hours" placeholder="00" min="0" max="23">
-                <label>sati</label>
+                <label>Hours</label>
             </div>
             <div>
                 <input type="number" id="minutes" placeholder="00" min="0" max="59">
-                <label>minuti</label>
+                <label>Minutes</label>
             </div>
             <div>
                 <input type="number" id="seconds" placeholder="00" min="0" max="59">
-                <label>sekunde</label>
+                <label>Seconds</label>
             </div>
         </div>
         
         <div id="timer-display">00:00:00</div>
         
         <div class="controls">
-            <button id="start" class="start-btn" onclick="startTimer()">▶ Start</button>
-            <button id="pause" class="stop-btn" onclick="pauseTimer()">⏸ Pauza</button>
-            <button id="reset" class="reset-btn" onclick="resetTimer()">🔄 Reset</button>
+            <button id="start" class="start-btn" onclick="startTimer()">Start</button>
+            <button id="pause" class="stop-btn" onclick="pauseTimer()">Pause</button>
+            <button id="reset" class="reset-btn" onclick="resetTimer()">Reset</button>
         </div>
         
-        <div id="status">Postavite vreme i pritisnite Start</div>
+        <div id="status">Set time and press Start</div>
     </div>
 
     <script>
@@ -371,7 +355,7 @@
             document.getElementById('seconds').value = '';
             totalSeconds = minutes * 60;
             updateDisplay();
-            document.getElementById('status').textContent = `${minutes} minuta postavljeno - pritisnite Start!`;
+            document.getElementById('status').textContent = `${minutes} minutes set - press Start`;
         }
 
         function startTimer() {
@@ -388,7 +372,7 @@
                 if (totalSeconds > 0) {
                     isRunning = true;
                     document.getElementById('timer-display').classList.add('pulse');
-                    document.getElementById('status').textContent = 'Start countdown: 3... 2... 1...';
+                    document.getElementById('status').textContent = 'Starting countdown: 3... 2... 1...';
                     
                     // Pusti start countdown
                     playStartCountdown();
@@ -396,7 +380,7 @@
                     // Čeka 3 sekunde pre početka timera
                     setTimeout(() => {
                         if (isRunning) { // Proveri da li je timer još uvek aktivan
-                            document.getElementById('status').textContent = 'Timer je pokrenut...';
+                            document.getElementById('status').textContent = 'Timer running...';
                             
                             timer = setInterval(function() {
                                 totalSeconds--;
@@ -411,7 +395,7 @@
                                     clearInterval(timer);
                                     isRunning = false;
                                     document.getElementById('timer-display').classList.remove('pulse');
-                                    document.getElementById('status').textContent = '⏰ Vreme je isteklo!';
+                                    document.getElementById('status').textContent = 'Time completed!';
                                     
                                     // Pusti završni zvuk
                                     playEndSound();
@@ -419,8 +403,8 @@
                                     // Pokušaj notifikaciju
                                     try {
                                         if ('Notification' in window && Notification.permission === 'granted') {
-                                            new Notification('Timer završen!', {
-                                                body: 'Vreme je isteklo!',
+                                            new Notification('Timer finished!', {
+                                                body: 'Time is up!',
                                                 icon: '⏰'
                                             });
                                         }
@@ -432,7 +416,7 @@
                         }
                     }, 3000); // 3 sekunde delay
                 } else {
-                    document.getElementById('status').textContent = 'Molimo unesite vreme ili izaberite preset!';
+                    document.getElementById('status').textContent = 'Please set time or choose preset';
                 }
             }
         }
@@ -443,7 +427,7 @@
                 clearTimeout(); // Prekini i start countdown ako je aktivan
                 isRunning = false;
                 document.getElementById('timer-display').classList.remove('pulse');
-                document.getElementById('status').textContent = 'Timer je pauziran';
+                document.getElementById('status').textContent = 'Timer paused';
             }
         }
 
@@ -456,7 +440,7 @@
             document.getElementById('hours').value = '';
             document.getElementById('minutes').value = '';
             document.getElementById('seconds').value = '';
-            document.getElementById('status').textContent = 'Postavite vreme i pritisnite Start';
+            document.getElementById('status').textContent = 'Set time and press Start';
         }
 
         // Request notification permission kada se stranica učita
