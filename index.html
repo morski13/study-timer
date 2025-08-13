@@ -310,10 +310,16 @@
             }
         }
 
-        function playStartSound() {
-            // Prijatan start zvuk - uzlazni ton
-            playBeep(400, 0.2);
-            setTimeout(() => playBeep(600, 0.2), 100);
+        function playStartCountdown() {
+            // Start countdown: 3, 2, 1, GO!
+            playBeep(600, 0.4); // 3
+            setTimeout(() => playBeep(700, 0.4), 1000); // 2
+            setTimeout(() => playBeep(800, 0.4), 2000); // 1
+            setTimeout(() => {
+                // GO! - energičan start ton
+                playBeep(1000, 0.3);
+                setTimeout(() => playBeep(1200, 0.3), 100);
+            }, 3000);
         }
 
         function playCountdownSound(seconds) {
@@ -382,42 +388,49 @@
                 if (totalSeconds > 0) {
                     isRunning = true;
                     document.getElementById('timer-display').classList.add('pulse');
-                    document.getElementById('status').textContent = 'Timer je pokrenut...';
+                    document.getElementById('status').textContent = 'Start countdown: 3... 2... 1...';
                     
-                    // Pusti start zvuk
-                    playStartSound();
+                    // Pusti start countdown
+                    playStartCountdown();
                     
-                    timer = setInterval(function() {
-                        totalSeconds--;
-                        updateDisplay();
-                        
-                        // Countdown zvukovi za poslednje sekunde
-                        if (totalSeconds === 5 || totalSeconds === 4 || totalSeconds === 3 || totalSeconds === 2 || totalSeconds === 1) {
-                            playCountdownSound(totalSeconds);
-                        }
-                        
-                        if (totalSeconds <= 0) {
-                            clearInterval(timer);
-                            isRunning = false;
-                            document.getElementById('timer-display').classList.remove('pulse');
-                            document.getElementById('status').textContent = '⏰ Vreme je isteklo!';
+                    // Čeka 3 sekunde pre početka timera
+                    setTimeout(() => {
+                        if (isRunning) { // Proveri da li je timer još uvek aktivan
+                            document.getElementById('status').textContent = 'Timer je pokrenut...';
                             
-                            // Pusti završni zvuk
-                            playEndSound();
-                            
-                            // Pokušaj notifikaciju
-                            try {
-                                if ('Notification' in window && Notification.permission === 'granted') {
-                                    new Notification('Timer završen!', {
-                                        body: 'Vreme je isteklo!',
-                                        icon: '⏰'
-                                    });
+                            timer = setInterval(function() {
+                                totalSeconds--;
+                                updateDisplay();
+                                
+                                // Countdown zvukovi za poslednje sekunde
+                                if (totalSeconds === 5 || totalSeconds === 4 || totalSeconds === 3 || totalSeconds === 2 || totalSeconds === 1) {
+                                    playCountdownSound(totalSeconds);
                                 }
-                            } catch(e) {
-                                console.log('Notifikacija nije dostupna');
-                            }
+                                
+                                if (totalSeconds <= 0) {
+                                    clearInterval(timer);
+                                    isRunning = false;
+                                    document.getElementById('timer-display').classList.remove('pulse');
+                                    document.getElementById('status').textContent = '⏰ Vreme je isteklo!';
+                                    
+                                    // Pusti završni zvuk
+                                    playEndSound();
+                                    
+                                    // Pokušaj notifikaciju
+                                    try {
+                                        if ('Notification' in window && Notification.permission === 'granted') {
+                                            new Notification('Timer završen!', {
+                                                body: 'Vreme je isteklo!',
+                                                icon: '⏰'
+                                            });
+                                        }
+                                    } catch(e) {
+                                        console.log('Notifikacija nije dostupna');
+                                    }
+                                }
+                            }, 1000);
                         }
-                    }, 1000);
+                    }, 3000); // 3 sekunde delay
                 } else {
                     document.getElementById('status').textContent = 'Molimo unesite vreme ili izaberite preset!';
                 }
@@ -427,6 +440,7 @@
         function pauseTimer() {
             if (isRunning) {
                 clearInterval(timer);
+                clearTimeout(); // Prekini i start countdown ako je aktivan
                 isRunning = false;
                 document.getElementById('timer-display').classList.remove('pulse');
                 document.getElementById('status').textContent = 'Timer je pauziran';
