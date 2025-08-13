@@ -1,1 +1,22 @@
 
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+}
+#timer-display {
+  font-size: 4rem;
+  margin: 20px 0;
+}
+button {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+#status {
+  margin-top: 15px;
+  font-weight: bold;
+}
