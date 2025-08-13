@@ -31,7 +31,11 @@ function setTimer() {
 
 startBtn.addEventListener('click', function() {
     if (!isRunning) {
-        setTimer();
+        // Ako nije ručno uneto vreme, koristi vrednost iz input polja
+        if (totalSeconds === 0) {
+            setTimer();
+        }
+        
         if (totalSeconds > 0) {
             isRunning = true;
             timerDisplay.classList.add('pulse');
@@ -57,7 +61,7 @@ startBtn.addEventListener('click', function() {
                 }
             }, 1000);
         } else {
-            status.textContent = 'Molimo unesite vreme!';
+            status.textContent = 'Molimo unesite vreme ili izaberite preset!';
         }
     }
 });
