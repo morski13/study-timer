@@ -146,6 +146,39 @@ button:active {
     z-index: 2;
 }
 
+.presets {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.preset-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.preset-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.preset-btn:active {
+    transform: translateY(0);
+}
+
 .time-input {
     display: flex;
     gap: 10px;
@@ -199,5 +232,10 @@ button:active {
     button {
         padding: 12px 20px;
         font-size: 1rem;
+    }
+    
+    .preset-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
     }
 }
