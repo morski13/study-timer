@@ -4,16 +4,256 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moderni Timer</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .presets {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .preset-btn:active {
+            transform: translateY(0);
+        }
+
+        .time-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .time-input input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 1.1rem;
+            width: 80px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .time-input input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .time-input input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .time-input label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        #timer-display {
+            font-size: 5rem;
+            font-weight: 100;
+            margin: 30px 0;
+            letter-spacing: 4px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        #timer-display.pulse {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .start-btn:hover {
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+        }
+
+        .stop-btn {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .stop-btn:hover {
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.6);
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #6c757d, #adb5bd);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .reset-btn:hover {
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.6);
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 480px) {
+            #timer-display {
+                font-size: 3.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .preset-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>⏰ TIMER</h1>
         
         <div class="presets">
-            <button class="preset-btn" data-minutes="45">📚 Učenje (45min)</button>
-            <button class="preset-btn" data-minutes="10">☕ Pauza mala (10min)</button>
-            <button class="preset-btn" data-minutes="15">🍽️ Pauza velika (15min)</button>
+            <button class="preset-btn" onclick="setPreset(45)">📚 Učenje (45min)</button>
+            <button class="preset-btn" onclick="setPreset(10)">☕ Pauza mala (10min)</button>
+            <button class="preset-btn" onclick="setPreset(15)">🍽️ Pauza velika (15min)</button>
         </div>
         
         <div class="time-input">
@@ -34,14 +274,118 @@
         <div id="timer-display">00:00:00</div>
         
         <div class="controls">
-            <button id="start" class="start-btn">▶ Start</button>
-            <button id="pause" class="stop-btn">⏸ Pauza</button>
-            <button id="reset" class="reset-btn">🔄 Reset</button>
+            <button id="start" class="start-btn" onclick="startTimer()">▶ Start</button>
+            <button id="pause" class="stop-btn" onclick="pauseTimer()">⏸ Pauza</button>
+            <button id="reset" class="reset-btn" onclick="resetTimer()">🔄 Reset</button>
         </div>
         
         <div id="status">Postavite vreme i pritisnite Start</div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let timer = null;
+        let totalSeconds = 0;
+        let isRunning = false;
+
+        function updateDisplay() {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            document.getElementById('timer-display').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function setPreset(minutes) {
+            // Resetuj timer ako je aktivan
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                document.getElementById('timer-display').classList.remove('pulse');
+            }
+            
+            // Postavi preset vreme
+            document.getElementById('hours').value = '';
+            document.getElementById('minutes').value = minutes;
+            document.getElementById('seconds').value = '';
+            totalSeconds = minutes * 60;
+            updateDisplay();
+            document.getElementById('status').textContent = `${minutes} minuta postavljeno - pritisnite Start!`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                // Ako totalSeconds nije postavljen, uzmi iz input polja
+                if (totalSeconds === 0) {
+                    const hours = parseInt(document.getElementById('hours').value) || 0;
+                    const minutes = parseInt(document.getElementById('minutes').value) || 0;
+                    const seconds = parseInt(document.getElementById('seconds').value) || 0;
+                    totalSeconds = hours * 3600 + minutes * 60 + seconds;
+                    updateDisplay();
+                }
+                
+                if (totalSeconds > 0) {
+                    isRunning = true;
+                    document.getElementById('timer-display').classList.add('pulse');
+                    document.getElementById('status').textContent = 'Timer je pokrenut...';
+                    
+                    timer = setInterval(function() {
+                        totalSeconds--;
+                        updateDisplay();
+                        
+                        if (totalSeconds <= 0) {
+                            clearInterval(timer);
+                            isRunning = false;
+                            document.getElementById('timer-display').classList.remove('pulse');
+                            document.getElementById('status').textContent = '⏰ Vreme je isteklo!';
+                            
+                            // Pokušaj notifikaciju
+                            try {
+                                if ('Notification' in window && Notification.permission === 'granted') {
+                                    new Notification('Timer završen!', {
+                                        body: 'Vreme je isteklo!',
+                                        icon: '⏰'
+                                    });
+                                }
+                            } catch(e) {
+                                console.log('Notifikacija nije dostupna');
+                            }
+                        }
+                    }, 1000);
+                } else {
+                    document.getElementById('status').textContent = 'Molimo unesite vreme ili izaberite preset!';
+                }
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                document.getElementById('timer-display').classList.remove('pulse');
+                document.getElementById('status').textContent = 'Timer je pauziran';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            totalSeconds = 0;
+            document.getElementById('timer-display').classList.remove('pulse');
+            updateDisplay();
+            document.getElementById('hours').value = '';
+            document.getElementById('minutes').value = '';
+            document.getElementById('seconds').value = '';
+            document.getElementById('status').textContent = 'Postavite vreme i pritisnite Start';
+        }
+
+        // Request notification permission kada se stranica učita
+        window.onload = function() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+            updateDisplay();
+        };
+    </script>
 </body>
 </html>
